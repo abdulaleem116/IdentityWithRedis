@@ -9,6 +9,8 @@
 
 </head>
 <body>
+
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -48,9 +50,26 @@
     <script type="text/javascript">
         var conn;
         var chatRef;
+        var notiRef;
         $(document).ready(function () {
+            //Getting UserName of Logged in user
+            debugger;
+            var LoggedInuserN = @Html.Raw(Json.Encode(Session["CurrentLoggedInUserName"]));
+
             chatRef = $.connection.chat;
+            notiRef = $.connection.notificationHub;
+
             conn = $.connection.hub.start();
+
+            //Show Notification globally
+
+            notiRef.client.receiveNotification = function (notificationSenderUserName, notificationReceiverUserName) {
+                if (notificationReceiverUserName == LoggedInuserN) {
+                    alert("You've received notification from " + notificationSenderUserName);
+                }
+            };
+
+
 
 
         });

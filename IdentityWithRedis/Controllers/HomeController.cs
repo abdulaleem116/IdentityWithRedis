@@ -25,6 +25,9 @@ namespace IdentityWithRedis.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
+            var currentLoggedUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            Session["CurrentLoggedInUserName"] = currentLoggedUser.UserName;
+            ViewBag.loggedInUserName = currentLoggedUser.UserName;
             var users = await UserManager.Users.ToListAsync();
             List<ApplicationUser> applicationUsers = new List<ApplicationUser>();
 

@@ -5,21 +5,48 @@
 
 <br />
 <br />
+
+<input type="hidden" value="@ViewBag.loggedInUserName" id="NotificationSender" />
 <ul>
     @foreach (var items in Model)
     {
         <li>
-            <a style="cursor:pointer;" data-id="@items.Id" onclick="clickOnDetail(this)">@items.UserName</a>
+            <a style="cursor:pointer;" data-id="@items.Id" onclick="clickOnDetail(this)">@items.UserName</a> <span><input type="button" data-content="@items.UserName" value="Send Notification" onclick="SendNotification(this)" /></span>
         </li>
     }
 </ul>
 
 @section scripts {
     <script type="text/javascript">
+        //Receive Notification
+        $(document).ready(function () {
+            //notiRef.client.receiveNotification = function (notificationSenderUserName,notificationReceiverUserName) {
+            //    alert(notificationReceiverUserName);
+                   
+            //    //console.log($('#currentLoggedInUser').val());
+            //    //var currentLoggedInUser = $('#currentLoggedInUser').val();
+            //    //if (receiverName === currentLoggedInUser) {
+            //    //    console.log(true);
+            //    //     $('#messageList').append('<li><strong>' + senderName
+            //    //        + '</strong>: ' + msginput + '</li>');
+            //    //}
+            //};
+        });
+
+
         function clickOnDetail(current) {
             var offerId = $(current).data('id');
             window.location.href = "/Home/Chat?id=" + offerId;
         }
+
+        function SendNotification(current) {
+            var notificationReceiverUserName =  $(current).data('content');
+            var notificationSenderUserName = $('#NotificationSender').val();
+            conn.done(function () {
+               notiRef.server.sendNotification(notificationSenderUserName,notificationReceiverUserName);
+             });
+        }
+       
     </script>
 
 }
