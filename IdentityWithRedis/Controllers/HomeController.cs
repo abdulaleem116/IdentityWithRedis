@@ -67,7 +67,23 @@ namespace IdentityWithRedis.Controllers
             var currentLoggedUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             ViewBag.SenderName = currentLoggedUser.UserName;
             ViewBag.currentLoggedUserName = currentLoggedUser.UserName;
-           return View();
+
+            //Retrieve messages of loggedIn/Current User and receiver messages
+            var lstSampleObject = RedisCacheHelper.Get<List<SampleObject>>("redisChat");
+            List<SampleObject> chatList = new List<SampleObject>();
+            if(lstSampleObject != null)
+            {
+                foreach(var items in lstSampleObject)
+                {
+                  if((items.senderUName == currentLoggedUser.UserName && items.receiverUName == receiverObject.UserName) ||
+                      (items.senderUName == receiverObject.UserName && items.receiverUName == currentLoggedUser.UserName)
+                        )
+                    {
+                        chatList.Add(items);
+                    }
+                }
+            }
+            return View(chatList);
         }
         public ActionResult About()
         {
@@ -102,27 +118,27 @@ namespace IdentityWithRedis.Controllers
         /*Redis Testing */
         public ActionResult RedisTest()
         {
-            SampleObject sampleObject = new SampleObject
-            {
-                Country = "Brazil",
-                Id = 7,
-                Name = "Mané"
-            };
-            RedisCacheHelper.Set("test1", sampleObject);
+            //SampleObject sampleObject = new SampleObject
+            //{
+            //    senderUName = senderName,
+            //    receiverUName = receiverName,
+            //    textMsg = msginput
+            //};
+            //RedisCacheHelper.Set("test1", sampleObject);
             return View();
         }
         [HttpPost]
-        public ActionResult saveDataInRedis()
+        public ActionResult saveDataInRedis(string senderName,string receiverName, string msginput)
         {
-            var lstSampleObject = RedisCacheHelper.Get<List<SampleObject>>("test2");
+            var lstSampleObject = RedisCacheHelper.Get<List<SampleObject>>("redisChat");
             if (lstSampleObject == null)
             {
                 lstSampleObject = new List<SampleObject>{
                      new SampleObject
                                      {
-                                         Country = "Brazil",
-                                         Id = 7,
-                                         Name = "Mané"
+                                         senderUName = senderName,
+                                         receiverUName = receiverName,
+                                         textMsg = msginput
                                      }
                 };
             }
@@ -131,12 +147,12 @@ namespace IdentityWithRedis.Controllers
                 lstSampleObject.Add(
                 new SampleObject
                 {
-                    Country = "Brazil",
-                    Id = 7,
-                    Name = "Mané"
+                    senderUName = senderName,
+                    receiverUName = receiverName,
+                    textMsg = msginput
                 });
             }
-            RedisCacheHelper.Set("test2", lstSampleObject);
+            RedisCacheHelper.Set("redisChat", lstSampleObject);
             return Json(new { status = true });
         }
     }

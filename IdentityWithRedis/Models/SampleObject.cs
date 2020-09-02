@@ -8,8 +8,8 @@ namespace IdentityWithRedis.Models
     [Serializable]
     public class SampleObject
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Country { get; set; }
+        public string senderUName { get; set; }
+        public string receiverUName { get; set; }
+        public string  textMsg { get; set; }
     }
 }

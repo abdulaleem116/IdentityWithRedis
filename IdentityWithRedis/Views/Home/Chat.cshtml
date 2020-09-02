@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<IdentityWithRedis.Models.SampleObject>
 @{
     ViewBag.Title = "Chat";
 }
@@ -15,7 +15,10 @@
 <hr />
 <h3>Message</h3>
 <ul id="messageList">
-
+    @foreach(var items in Model)
+    {
+        <li><strong> @items.senderUName </strong>:   @items.textMsg </li>
+    }
 </ul>
 @section scripts{
     <script type="text/javascript">
