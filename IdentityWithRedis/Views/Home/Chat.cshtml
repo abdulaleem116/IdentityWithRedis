@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Chat";
+}
+
+<h2>Chat</h2>
+
+<input type="text" class="form-control" id="msginput" />
+<input type="button" id="ainvinBotton" value="submit" />
+<input id="senderName" type="text" value="@ViewBag.SenderName" />
+<input id="receiverName" type="text" value="@ViewBag.receiverName" />
+<input id="currentLoggedInUser" type="text" value="@ViewBag.currentLoggedUserName" />
+
+
+<hr />
+<h3>Message</h3>
+<ul id="messageList">
+
+</ul>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var chatRef = $.connection.chat;
+                   //Display Async Notification comming from user
+            chatRef.client.receiveMessage = function (senderName, receiverName, msginput) {
+                debugger;
+               //which client should see this Notification
+               @*var receiverName = @Html.Raw(Json.Encode(Session["UserId"]));*@
+                    //var senderName = $('#senderName').val();
+                console.log($('#currentLoggedInUser').val());
+                var currentLoggedInUser = $('#currentLoggedInUser').val();
+                // var msginput = $('#msginput').val();
+               
+                   
+                if (receiverName === currentLoggedInUser) {
+                    console.log(true);
+                     $('#messageList').append('<li><strong>' + senderName
+                        + '</strong>: ' + msginput + '</li>');
+
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: '/User/updateNotificationSession',
+                    //    data: {'to' :toWhoCreatedOffer },
+                    //    success: function (data) {
+                    //        // alert(msg);
+                    //        if (data.status == true) {
+                    //            console.log("successfully updated");
+                    //        } 
+                    //    }
+                       
+                    //}).then(function () {
+                    //    var notificationCurrentCount = $('#getCurrentNotificationCount').text();
+                    //    var notiCount = parseInt(notificationCurrentCount);
+                    //    notiCount = notiCount + 1;
+                    //    $('#getCurrentNotificationCount').text(notiCount)
+                    //    var domObject = '<a class="dropdown-item d-flex align-items-center" href="' + window.location.origin + '/' + urlToBeNevigate + '&notificationId=' + notificationId + '">';
+                    //    domObject += '<div class="mr-3">';
+                    //    domObject += '<div class="icon-circle bg-primary">';
+                    //    domObject += '<i class="fas fa-envelope text-white"></i>'
+                    //    domObject += '</div>';
+                    //    domObject += '</div>';
+                    //    domObject += '<div>';
+                    //    domObject += '<div class="small text-gray-500">Just now</div>';
+                    //    domObject += '<span class="font-weight-bold">You have new comment from Admin</span>';
+                    //    domObject += '</div>';
+                    //    domObject += '</a>';
+                    //    $('#notificationAppendingDiv').prepend(domObject);
+                    //})
+
+                }
+            };
+
+
+
+
+           var conn = $.connection.hub.start();
+            conn.done(function () {
+                $('#ainvinBotton').click(function () {
+                    var senderName = $('#senderName').val();
+                    var receiverName = $('#receiverName').val();
+                    var msginput = $('#msginput').val();
+                   
+                    chatRef.server.sendMessage(senderName, receiverName, msginput).then(function () {
+                         $('#messageList').append('<li><strong>' + senderName
+                        + '</strong>: ' + msginput + '</li>');
+                    });
+                });
+                //$('#ainvinBotton').trigger('click');
+            });
+        });
+    </script>
+}

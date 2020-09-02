@@ -1,0 +1,37 @@
+﻿@model IEnumerable<IdentityWithRedis.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<br />
+<br />
+@*@if (User.IsInRole("Admin"))
+    {
+     <ul>
+        @foreach (var items in Model)
+        {
+        <li>
+            <a style="cursor:pointer;" data-id="@items.Id" onclick="clickOnDetail(this)">@items.UserName</a>
+        </li>
+        }
+    </ul>
+
+    }*@
+<ul>
+    @foreach (var items in Model)
+    {
+        <li>
+            <a style="cursor:pointer;" data-id="@items.Id" onclick="clickOnDetail(this)">@items.UserName</a>
+        </li>
+    }
+</ul>
+
+@section scripts {
+    <script type="text/javascript">
+        function clickOnDetail(current) {
+            var offerId = $(current).data('id');
+            window.location.href = "/Home/Chat?id=" + offerId;
+        }
+    </script>
+
+}
