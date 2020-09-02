@@ -111,5 +111,33 @@ namespace IdentityWithRedis.Controllers
             RedisCacheHelper.Set("test1", sampleObject);
             return View();
         }
+        [HttpPost]
+        public ActionResult saveDataInRedis()
+        {
+            var lstSampleObject = RedisCacheHelper.Get<List<SampleObject>>("test2");
+            if (lstSampleObject == null)
+            {
+                lstSampleObject = new List<SampleObject>{
+                     new SampleObject
+                                     {
+                                         Country = "Brazil",
+                                         Id = 7,
+                                         Name = "Mané"
+                                     }
+                };
+            }
+            else
+            {
+                lstSampleObject.Add(
+                new SampleObject
+                {
+                    Country = "Brazil",
+                    Id = 7,
+                    Name = "Mané"
+                });
+            }
+            RedisCacheHelper.Set("test2", lstSampleObject);
+            return Json(new { status = true });
+        }
     }
 }

@@ -82,11 +82,22 @@
                    
                     chatRef.server.sendMessage(senderName, receiverName, msginput).then(function () {
                          $('#messageList').append('<li><strong>' + senderName
-                        + '</strong>: ' + msginput + '</li>');
+                             + '</strong>: ' + msginput + '</li>');
+                        // Call ajax to save messages in Redis Database
+                        $.ajax({
+                            type: "POST",
+                            url: '/Home/saveDataInRedis',
+                            data: { 'senderName': senderName, 'receiverName': receiverName, 'msginput': msginput },
+                            success: function (data) {
+                                // alert(msg);
+                                if (data.status == true) {
+                                    alert("Data save in Redis Db successfully");
+                                }
+                            }
+                         });
+
                     });
                 });
-                //$('#ainvinBotton').trigger('click');
-
             });
         });
     </script>
