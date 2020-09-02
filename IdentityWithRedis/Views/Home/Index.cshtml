@@ -20,17 +20,14 @@
     <script type="text/javascript">
         //Receive Notification
         $(document).ready(function () {
-            //notiRef.client.receiveNotification = function (notificationSenderUserName,notificationReceiverUserName) {
-            //    alert(notificationReceiverUserName);
-                   
-            //    //console.log($('#currentLoggedInUser').val());
-            //    //var currentLoggedInUser = $('#currentLoggedInUser').val();
-            //    //if (receiverName === currentLoggedInUser) {
-            //    //    console.log(true);
-            //    //     $('#messageList').append('<li><strong>' + senderName
-            //    //        + '</strong>: ' + msginput + '</li>');
-            //    //}
-            //};
+            notiRef.client.receiveNotification = function (notificationSenderUserName,notificationReceiverUserName) {
+                // alert(notificationReceiverUserName);
+                var NotificationSender = $('#NotificationSender').val();
+                debugger;
+                if (notificationReceiverUserName === NotificationSender) { //here NotificationSender is CurrentLoggedIn user
+                    alert("You've received notification from " + notificationSenderUserName);
+                }
+            };
         });
 
 

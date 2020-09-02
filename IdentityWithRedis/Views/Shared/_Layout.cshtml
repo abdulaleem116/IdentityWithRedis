@@ -50,24 +50,24 @@
     <script type="text/javascript">
         var conn;
         var chatRef;
-        var notiRef;
+        var notiRef = $.connection.notificationHub;
         $(document).ready(function () {
             //Getting UserName of Logged in user
             debugger;
             var LoggedInuserN = @Html.Raw(Json.Encode(Session["CurrentLoggedInUserName"]));
 
             chatRef = $.connection.chat;
-            notiRef = $.connection.notificationHub;
+           // notiRef = $.connection.notificationHub;
 
             conn = $.connection.hub.start();
 
             //Show Notification globally
 
-            notiRef.client.receiveNotification = function (notificationSenderUserName, notificationReceiverUserName) {
-                if (notificationReceiverUserName == LoggedInuserN) {
-                    alert("You've received notification from " + notificationSenderUserName);
-                }
-            };
+            //notiRef.client.receiveNotification = function (notificationSenderUserName, notificationReceiverUserName) {
+            //    if (notificationReceiverUserName == LoggedInuserN) {
+            //        alert("You've received notification from " + notificationSenderUserName);
+            //    }
+            //};
 
 
 
