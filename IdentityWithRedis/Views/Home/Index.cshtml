@@ -5,18 +5,6 @@
 
 <br />
 <br />
-@*@if (User.IsInRole("Admin"))
-    {
-     <ul>
-        @foreach (var items in Model)
-        {
-        <li>
-            <a style="cursor:pointer;" data-id="@items.Id" onclick="clickOnDetail(this)">@items.UserName</a>
-        </li>
-        }
-    </ul>
-
-    }*@
 <ul>
     @foreach (var items in Model)
     {
