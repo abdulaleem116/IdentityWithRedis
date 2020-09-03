@@ -160,7 +160,10 @@ namespace IdentityWithRedis.Controllers
         }
         public ActionResult LiveConnectionTest()
         {
-
+         return View();
+        }
+        public ActionResult LiveConnectionTest1()
+        {
             return View();
         }
     }
