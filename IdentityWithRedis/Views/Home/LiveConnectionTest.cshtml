@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "LiveConnectionTest";
+}
+
+<h2>LiveConnectionTest</h2>
+<br />
+<h3>Click on button to get Connected users</h3>
+<button id="show-all-connections">Show Connections</button>
+<ul id="user-list">
+</ul>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$.connection.onlineUsers.client.connected = function () {
+
+
+
+            //}
+
+            var conn1 = $.connection.hub.start();
+            $("#show-all-connections").on("click", function () {
+
+                debugger;
+                conn1.done(function () {
+                    onlineUsers.server.getAllActiveConnections().done(function (connections) {
+                        $.map(connections, function (item) {
+                            $("#user-list").append("<li>Connection ID : " + item + "</li>");
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+    
+    }

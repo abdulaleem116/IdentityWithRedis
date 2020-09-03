@@ -158,5 +158,11 @@ namespace IdentityWithRedis.Controllers
             RedisCacheHelper.Set("redisChat", lstSampleObject);
             return Json(new { status = true });
         }
+        public ActionResult LiveConnectionTest()
+        {
+
+            return View();
+        }
     }
+   
 }
