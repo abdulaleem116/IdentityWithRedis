@@ -26,9 +26,9 @@
                     //    });
                     //});
                     onlineUserss.server.getAllActiveConnectionss().done(function (connections) {
-                        //$.map(connections, function (item) {
-                        //    $("#user-list").append("<li>Connection ID : " + item + "</li>");
-                        //});
+                        $.map(connections, function (item) {
+                            $("#user-list").append("<li>Connection ID : " + item.Name + "</li>");
+                        });
                     });
                 });
 

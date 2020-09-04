@@ -74,9 +74,7 @@ namespace IdentityWithRedis.Hubs
 
             return base.OnDisconnected(stopCalled);
         }
-
-      
-        public ConcurrentDictionary<string, User> GetAllActiveConnectionss()
+        public List<User> /*ConcurrentDictionary<string, User>*/ GetAllActiveConnectionss()
         {
             List<User> connectedUsers = new List<User>();
             var connList = Users;
@@ -88,7 +86,7 @@ namespace IdentityWithRedis.Hubs
                     var myValue = k.Value;
                 }
             }
-            return connList;
+            return items;
         }
 
     }

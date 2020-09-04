@@ -11,7 +11,7 @@ namespace IdentityWithRedis.Hubs
     {
         public async Task sendMessage(string senderName, string receiverName, string msginput)
         {
-            await Clients.All.receiveMessage(senderName, receiverName, msginput);
+           await Clients.All.receiveMessage(senderName, receiverName, msginput);
         }
     }
 }

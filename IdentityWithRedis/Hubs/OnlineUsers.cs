@@ -13,7 +13,7 @@ namespace IdentityWithRedis.Hubs
 
         public override Task OnConnected()
         {
-
+            
             var id = Context.ConnectionId;
             CurrentConnections.Add(id);
 

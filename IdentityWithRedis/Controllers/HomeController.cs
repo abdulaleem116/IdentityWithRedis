@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -25,6 +26,7 @@ namespace IdentityWithRedis.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
+            //  Practcing 
             var currentLoggedUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             Session["CurrentLoggedInUserName"] = currentLoggedUser.UserName;
             ViewBag.loggedInUserName = currentLoggedUser.UserName;
